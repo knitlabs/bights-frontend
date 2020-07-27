@@ -1,0 +1,22 @@
+html {
+    height: 100%;
+    background: linear-gradient(135deg, #6ccde5, #d5d6d8) no-repeat;
+}
+
+body {
+    margin: 0em;
+}
+
+.navbar {
+    width: 100%;
+}
+
+.logo-img {
+    padding: 3%;
+}
+
+@media only screen and (max-width: 600px) {
+    .logo-img {
+        padding: 5%;
+    }
+}
