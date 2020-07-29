@@ -100,10 +100,6 @@ Vue.component('signup', {
             .then(function(response){
                 if(response.status == 200){
                     localStorage.setItem('token', response.data.token);
-                    console.log('local storage');
-                }
-                if(response.status == 422){
-                    console.log("try again")
                 }
             })
             .catch(function(error) {
