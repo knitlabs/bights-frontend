@@ -1,5 +1,18 @@
 const baseUrl = "http://localhost:8080";
 
+jdenticon.config = {
+    hues: [196],
+    lightness: {
+        color: [0.36, 0.70],
+        grayscale: [0.24, 0.82]
+    },
+    saturation: {
+        color: 0.51,
+        grayscale: 0.10
+    },
+    backColor: "#86444400"
+};
+
 Vue.component('navbar', {
     props: ['username', 'isloggedin', 'profile_icon'],
     template:
@@ -11,19 +24,28 @@ Vue.component('navbar', {
             <p>Login/SignUp</p>
         </div>
         <div v-else class="profile-icon" >
-            <p>{{ username }}</p>
-            <img v-bind:src="profile_icon">
+            <p>{{ username }}</p>(<p v-on:click="logout">Logout</p>)
+            <span v-html="profile_icon"></span>
         </div>
     </div>`,
     data: function () {
         return {
             logo: 'bights',
-            image: 'bightsLogoSmall.png',
+            image: 'bightsLogoSmall.png'
         }
     },
     methods:{
         showLoginSignupForm: function(){
-            document.getElementsByClassName('login-signup-form')[0].style.display = "block";
+            var loginSignupFormDisplay = document.getElementsByClassName('login-signup-form')[0]
+            if(loginSignupFormDisplay.style.display == "block"){
+                loginSignupFormDisplay.style.display = "none";
+            }else{
+                loginSignupFormDisplay.style.display = "block";
+            }
+        },
+        logout: function(){
+            localStorage.removeItem('token');
+            location.reload();
         }
     }
 })
@@ -173,7 +195,7 @@ Vue.component('profilebox', {
     template:
     `<div class="profile-box">
         <div class="profile-picture">
-            <img v-bind:src="profile_icon">
+            <span v-html="profile_icon"></span>
         </div>
         <div class="details-field">
             <div class="name-field">
@@ -185,13 +207,53 @@ Vue.component('profilebox', {
     </div>`
 })
 
+Vue.component('extrasbox', {
+    template:
+    `<div class="extras-box">
+        <div class="button-select">
+            <button v-on:click="toggleSelected(0)" v-bind:class="{selected: isQuestionsActive}">Ask</button>
+            <button v-on:click="toggleSelected(1)" v-bind:class="{selected: isNotificationsActive}">Notifications</button>
+            <button v-on:click="toggleSelected(2)" v-bind:class="{selected: isChatsActive}">Chats</button>
+        </div>
+        <questionsbox v-if="isQuestionsActive"></questionsbox>
+        <notificationsbox v-if="isNotificationsActive"></notificationsbox>
+        <chatsbox v-if="isChatsActive"></chatsbox>
+    </div>`,
+    data: function(){
+        return{
+            isQuestionsActive: true,
+            isNotificationsActive: false,
+            isChatsActive: false
+        }
+    },
+    methods:{
+        toggleSelected: function(val){
+            if(val == 0){
+                this.isQuestionsActive = true
+                this.isNotificationsActive = false
+                this.isChatsActive = false
+            }
+            else if(val == 1){
+                this.isQuestionsActive = false
+                this.isNotificationsActive = true
+                this.isChatsActive = false
+            }
+            else if(val == 2){
+                this.isQuestionsActive = false
+                this.isNotificationsActive = false
+                this.isChatsActive = true
+            }
+        }
+    }
+})
+
 var app = new Vue({
     el: '#app',
     data: {
         name: 'bights',
         isLoggedIn: false,
-        profile_icon:"profile-icon.png",
-        username: null,
+        profile_icon: null,
+        username: null
     },
     mounted(){
         if(localStorage.getItem('token')){
@@ -206,6 +268,7 @@ var app = new Vue({
             })
             .then(response => {
                 this.username = response.data.name;
+                this.profile_icon = jdenticon.toSvg(response.data.emailid, 100);
             })
             .catch(error => {
                 this.isLoggedIn = false;

@@ -20,11 +20,15 @@ body {
     vertical-align: middle;
 }
 
-.profile-icon img {
+.profile-icon svg {
     width: 60px;
     height: 60px;
     vertical-align: middle;
     filter: opacity(0.5);
+}
+
+.profile-icon svg:hover {
+    filter: opacity(1);
 }
 
 .profile-icon p {
@@ -40,7 +44,7 @@ body {
     display: none;
     margin: 100px auto;
     height: 380px;
-    width: 320px;
+    width: 350px;
     background-color: white;
     border-radius: 20px;
 }
@@ -98,11 +102,11 @@ input:focus {
 
 .profile-box {
     width: 50%;
-    margin: 100px auto 0px;
+    margin: 50px auto 0px;
     column-width: 100px;
 }
 
-.profile-picture img {
+.profile-picture svg {
     width: 120px;
     height: 120px;
 }
@@ -120,6 +124,14 @@ input:focus {
     margin: 0em;
 }
 
+.extras-box {
+    width: 60%;
+    height: 300px;
+    margin: 50px auto 0px;
+    border-radius: 20px;
+    background-color: white;
+}
+
 @media only screen and (max-width: 600px) {
     .navbar {
         margin: 6%;
@@ -132,7 +144,8 @@ input:focus {
         width: 330px;
     }
     .profile-box {
-        margin: 50px auto 0px;
+        width: 80%;
+        margin: 10px auto 0px;
         columns: auto;
     }
     .profile-picture,
@@ -143,5 +156,11 @@ input:focus {
     }
     .details-field {
         padding: 0em;
+    }
+    .extras-box {
+        width: 90%;
+    }
+    .extras-box .button-select button {
+        width: 80px;
     }
 }

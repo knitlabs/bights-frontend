@@ -7,6 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js" integrity="sha512-VZ6m0F78+yo3sbu48gElK4irv2dzPoep8oo9LEjxviigcnnnNvnTOJRSrIhuFk68FMLOpiNz+T77nNY89rnWDg==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js" integrity="sha512-BHtomM5XDcUy7tDNcrcX1Eh0RogdWiMdXl3wJcKB3PFekXb3l5aDzymaTher61u6vEZySnoC/SAj2Y/p918Y3w==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jdenticon@2.2.0/dist/jdenticon.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <link href="style.css" type="text/css" rel="stylesheet" />
     <title>Bights</title>
@@ -16,7 +17,8 @@
     <div id="app">
         <navbar v-bind:username="username" v-bind:profile_icon="profile_icon" v-bind:isloggedin="isLoggedIn" class="navbar"></navbar>
         <loginSignupForm v-if="!isLoggedIn"></loginSignupForm>
-        <profilebox v-bind:username="username" v-bind:profile_icon="profile_icon" v-else></profilebox>
+        <profilebox v-if="isLoggedIn" v-bind:username="username" v-bind:profile_icon="profile_icon" v-else></profilebox>
+        <extrasbox v-if="isLoggedIn"></extrasbox>
     </div>
     <script src="main.js"></script>
 </body>
