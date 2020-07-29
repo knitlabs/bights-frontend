@@ -1,24 +1,24 @@
+const baseUrl = "http://localhost:8080";
+
 Vue.component('navbar', {
+    props: ['username', 'isloggedin', 'profile_icon'],
     template:
     `<div>
         <div class="logo">
             <img class="logo-img" v-bind:src="image">
         </div>
-        <div v-on:click="showLoginSignupForm()" v-if="isLoggedIn == false" class="profile-icon" >
+        <div v-on:click="showLoginSignupForm()" v-if="isloggedin == false" class="profile-icon" >
             <p>Login/SignUp</p>
         </div>
         <div v-else class="profile-icon" >
             <p>{{ username }}</p>
-            <img v-bind:src="default_profile_icon">
+            <img v-bind:src="profile_icon">
         </div>
     </div>`,
     data: function () {
         return {
             logo: 'bights',
             image: 'bightsLogoSmall.png',
-            default_profile_icon:"profile-icon-small.png",
-            isLoggedIn: false,
-            username: "Akhil Seshan"
         }
     },
     methods:{
@@ -31,10 +31,10 @@ Vue.component('navbar', {
 Vue.component('login', {
     template:
     `<div class="login-form">
-        <form>
+        <form v-on:submit="submitLoginForm">
             <input class="form-input" type="text" v-model="emailid" placeholder="Email ID">
             <input class="form-input" type="password" v-model="password" v-on:input="checkPasswordLength()" placeholder="Enter Password">
-            <input class="form-input-button" v-bind:disabled="loginButtonDisabled" type="button" value="Login">
+            <input class="form-input-button" v-bind:disabled="loginButtonDisabled" type="submit" value="Login">
         </form>
     </div>`,
     data: function(){
@@ -51,6 +51,31 @@ Vue.component('login', {
             }else{
                 this.loginButtonDisabled = true
             }
+        },
+        submitLoginForm: function(e){
+            e.preventDefault();
+            axios({
+                method: 'post',
+                url: baseUrl + '/auth/login',
+                data: Qs.stringify({
+                    user_email: this.emailid,
+                    password: this.password
+                }),
+                headers: {
+                  'content-type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(function(response){
+                if(response.status == 200){
+                    localStorage.setItem('token', response.data.token);
+                    location.reload();
+                }
+            })
+            .catch(error => {
+                alert("Please check your username or password!!");
+                this.emailid = null;
+                this.password = null;
+            });
         }
     }
 })
@@ -87,7 +112,7 @@ Vue.component('signup', {
             e.preventDefault();
             axios({
                 method: 'post',
-                url: 'http://localhost:8080/auth/signup',
+                url: baseUrl + '/auth/signup',
                 data: Qs.stringify({
                     user_name: this.fullName,
                     user_email: this.emailid,
@@ -100,10 +125,14 @@ Vue.component('signup', {
             .then(function(response){
                 if(response.status == 200){
                     localStorage.setItem('token', response.data.token);
+                    location.reload();
                 }
             })
-            .catch(function(error) {
-                console.log("error");
+            .catch(error => {
+                alert("Account already exists!!");
+                this.fullName = null;
+                this.emailid = null;
+                this.password = null;
             });
         }
     }
@@ -139,9 +168,51 @@ Vue.component('loginsignupform', {
     }
 })
 
+Vue.component('profilebox', {
+    props:['username', 'profile_icon'],
+    template:
+    `<div class="profile-box">
+        <div class="profile-picture">
+            <img v-bind:src="profile_icon">
+        </div>
+        <div class="details-field">
+            <div class="name-field">
+                <p>{{ username }}</p>
+            </div>
+            <div class="rating-field">
+            </div>
+        </div>
+    </div>`
+})
+
 var app = new Vue({
     el: '#app',
     data: {
-        name: 'bights'
+        name: 'bights',
+        isLoggedIn: false,
+        profile_icon:"profile-icon.png",
+        username: null,
+    },
+    mounted(){
+        if(localStorage.getItem('token')){
+            const token = localStorage.getItem('token');
+            this.isLoggedIn = true;
+            axios({
+                method: 'get',
+                url: baseUrl + '/user/profile',
+                headers: {
+                  'Authorization': `Bearer ${token}` 
+                }
+            })
+            .then(response => {
+                this.username = response.data.name;
+            })
+            .catch(error => {
+                this.isLoggedIn = false;
+            })
+        }
+        else{
+            this.isLoggedIn = false;
+        }
     },
 })

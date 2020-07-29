@@ -14,8 +14,9 @@
 
 <body>
     <div id="app">
-        <navbar class="navbar"></navbar>
-        <loginSignupForm></loginSignupForm>
+        <navbar v-bind:username="username" v-bind:profile_icon="profile_icon" v-bind:isloggedin="isLoggedIn" class="navbar"></navbar>
+        <loginSignupForm v-if="!isLoggedIn"></loginSignupForm>
+        <profilebox v-bind:username="username" v-bind:profile_icon="profile_icon" v-else></profilebox>
     </div>
     <script src="main.js"></script>
 </body>
