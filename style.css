@@ -1,6 +1,8 @@
 html {
     height: 100%;
+    width: 100%;
     background: linear-gradient(135deg, #6ccde5, #d5d6d8) no-repeat;
+    font-family: 'Montserrat', sans-serif;
 }
 
 body {
@@ -8,15 +10,98 @@ body {
 }
 
 .navbar {
-    width: 100%;
+    display: inline-flex;
+    margin: 2%;
 }
 
-.logo-img {
-    padding: 3%;
+.profile-icon {
+    position: absolute;
+    right: 2%;
+    vertical-align: middle;
+}
+
+.profile-icon img {
+    vertical-align: middle;
+    filter: opacity(0.5);
+}
+
+.profile-icon p {
+    display: inline-block;
+    color: darkslategrey;
+}
+
+.profile-icon p:hover {
+    color: whitesmoke;
+}
+
+.login-signup-form {
+    display: none;
+    margin: 100px auto;
+    height: 380px;
+    width: 350px;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.button-select {
+    text-align: center;
+}
+
+.button-select button {
+    width: 100px;
+    height: 40px;
+    margin: 10px;
+    border: none;
+    background-color: transparent;
+}
+
+.button-select .selected {
+    border-bottom: solid #6ccde5;
+}
+
+.button-select button:focus,
+input:focus {
+    outline: none;
+}
+
+.login-form form,
+.signup-form form {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.form-input {
+    width: 300px;
+    height: 35px;
+    margin: 10px 0px 10px 0px;
+    border-radius: 10px;
+    border: 1px gray solid;
+}
+
+.form-input-button {
+    margin: 10px auto;
+    width: 100px;
+    height: 35px;
+    border-radius: 10px;
+    border: 0px;
+    background-color: #6ccde5;
+    color: white;
+}
+
+.form-input-button:disabled {
+    background-color: gray;
+    color: black;
+    opacity: 0.5;
 }
 
 @media only screen and (max-width: 600px) {
-    .logo-img {
-        padding: 5%;
+    .navbar {
+        margin: 6%;
+    }
+    .profile-icon {
+        right: 6%;
+    }
+    .login-signup-form {
+        margin-top: 20%;
     }
 }
