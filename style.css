@@ -1,7 +1,7 @@
 html {
     height: 100%;
     width: 100%;
-    background: linear-gradient(135deg, #6ccde5, #d5d6d8) no-repeat;
+    background: linear-gradient(135deg, #085078, #85D8CE) no-repeat;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -33,10 +33,6 @@ body {
 
 .profile-icon p {
     display: inline-block;
-    color: darkslategrey;
-}
-
-.profile-icon p:hover {
     color: whitesmoke;
 }
 
@@ -45,7 +41,7 @@ body {
     margin: 100px auto;
     height: 380px;
     width: 350px;
-    background-color: white;
+    background-color: whitesmoke;
     border-radius: 20px;
 }
 
@@ -62,7 +58,7 @@ body {
 }
 
 .button-select .selected {
-    border-bottom: solid #6ccde5;
+    border-bottom: solid #085078;
 }
 
 .button-select button:focus,
@@ -71,31 +67,36 @@ input:focus {
 }
 
 .login-form form,
-.signup-form form {
+.signup-form form,
+.question-form form {
     margin-top: 10px;
     text-align: center;
 }
 
 .form-input {
+    display: block;
     width: 300px;
     height: 35px;
-    margin: 10px 0px 10px 0px;
+    margin: 20px auto;
     border-radius: 10px;
-    border: 1px gray solid;
+    border: none;
+    background-color: lightgray;
+    outline: none;
 }
 
 .form-input-button {
-    margin: 10px auto;
+    display: block;
+    margin: 20px auto;
     width: 100px;
     height: 35px;
     border-radius: 10px;
     border: 0px;
-    background-color: #6ccde5;
+    background-color: #085078;
     color: white;
 }
 
 .form-input-button:disabled {
-    background-color: gray;
+    background-color: darkgray;
     color: black;
     opacity: 0.5;
 }
@@ -117,7 +118,8 @@ input:focus {
 
 .name-field,
 .rating-field {
-    font-size: 2em;
+    font-size: 1.6em;
+    color: white;
 }
 
 .name-field p {
@@ -127,7 +129,7 @@ input:focus {
 .extras-box {
     width: 60%;
     height: 300px;
-    margin: 50px auto 0px;
+    margin: 30px auto 0px;
     border-radius: 20px;
     background-color: white;
 }
@@ -144,8 +146,7 @@ input:focus {
         width: 330px;
     }
     .profile-box {
-        width: 80%;
-        margin: 10px auto 0px;
+        margin: 0px auto;
         columns: auto;
     }
     .profile-picture,
@@ -161,6 +162,6 @@ input:focus {
         width: 90%;
     }
     .extras-box .button-select button {
-        width: 80px;
+        width: 85px;
     }
 }

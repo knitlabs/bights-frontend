@@ -207,6 +207,47 @@ Vue.component('profilebox', {
     </div>`
 })
 
+Vue.component('questionsbox', {
+    template:
+    `<div class="question-form">
+        <form v-on:submit>
+            <input class="form-input" type="text" v-model="question" placeholder="Type your question..">
+            <input type="radio" id="general" v-model="type" value="general">
+            <label for="general">General</label>
+            <input type="radio" id="language" v-model="type" value="language">
+            <label for="language">Language Specific</label>
+            <select class="form-input" v-if="type=='language'" v-model="lang">
+                <option disabled value="">Choose a language</option>
+                <option v-for="language in languages" v-bind:value="language">{{ language }}</option>
+            </select>
+            <input class="form-input-button" v-bind:disabled="askButtonDisabled" type="submit" value="Ask">
+        </form>
+    </div>`,
+    data: function(){
+        return{
+            languages: ['C', 'C++', 'Java', 'Python', 'C#', 'JavaScript'],
+            question: "",
+            type: null,
+            lang: "",
+            askButtonDisabled: true
+        }
+    },
+    watch:{
+        type: function(val){
+            if(val == "general"){
+                this.lang = "";
+            }
+        },
+        question: function(val){
+            if(val != ""){
+                this.askButtonDisabled = false
+            }else{
+                this.askButtonDisabled = true
+            }
+        }
+    }
+})
+
 Vue.component('extrasbox', {
     template:
     `<div class="extras-box">
