@@ -16,7 +16,7 @@ jdenticon.config = {
 Vue.component('navbar', {
     props: ['username', 'isloggedin', 'profile_icon'],
     template:
-    `<div>
+        `<div>
         <div class="logo">
             <img class="logo-img" v-bind:src="image">
         </div>
@@ -31,19 +31,19 @@ Vue.component('navbar', {
     data: function () {
         return {
             logo: 'bights',
-            image: 'bightsLogoSmall.png'
+            image: './assets/images/bightsLogoSmall.png'
         }
     },
-    methods:{
-        showLoginSignupForm: function(){
+    methods: {
+        showLoginSignupForm: function () {
             var loginSignupFormDisplay = document.getElementsByClassName('login-signup-form')[0]
-            if(loginSignupFormDisplay.style.display == "block"){
+            if (loginSignupFormDisplay.style.display == "block") {
                 loginSignupFormDisplay.style.display = "none";
-            }else{
+            } else {
                 loginSignupFormDisplay.style.display = "block";
             }
         },
-        logout: function(){
+        logout: function () {
             localStorage.removeItem('token');
             location.reload();
         }
@@ -52,29 +52,29 @@ Vue.component('navbar', {
 
 Vue.component('login', {
     template:
-    `<div class="login-form">
+        `<div class="login-form">
         <form v-on:submit="submitLoginForm">
             <input class="form-input" type="text" v-model="emailid" placeholder="Email ID">
             <input class="form-input" type="password" v-model="password" v-on:input="checkPasswordLength()" placeholder="Enter Password">
             <input class="form-input-button" v-bind:disabled="loginButtonDisabled" type="submit" value="Login">
         </form>
     </div>`,
-    data: function(){
-        return{
+    data: function () {
+        return {
             emailid: "",
             password: "",
             loginButtonDisabled: true
         }
     },
-    methods:{
-        checkPasswordLength: function(){
-            if(this.password.length>=8){
+    methods: {
+        checkPasswordLength: function () {
+            if (this.password.length >= 8) {
                 this.loginButtonDisabled = false
-            }else{
+            } else {
                 this.loginButtonDisabled = true
             }
         },
-        submitLoginForm: function(e){
+        submitLoginForm: function (e) {
             e.preventDefault();
             axios({
                 method: 'post',
@@ -84,27 +84,27 @@ Vue.component('login', {
                     password: this.password
                 }),
                 headers: {
-                  'content-type': 'application/x-www-form-urlencoded'
+                    'content-type': 'application/x-www-form-urlencoded'
                 }
             })
-            .then(function(response){
-                if(response.status == 200){
-                    localStorage.setItem('token', response.data.token);
-                    location.reload();
-                }
-            })
-            .catch(error => {
-                alert("Please check your username or password!!");
-                this.emailid = null;
-                this.password = null;
-            });
+                .then(function (response) {
+                    if (response.status == 200) {
+                        localStorage.setItem('token', response.data.token);
+                        location.reload();
+                    }
+                })
+                .catch(error => {
+                    alert("Please check your username or password!!");
+                    this.emailid = null;
+                    this.password = null;
+                });
         }
     }
 })
 
 Vue.component('signup', {
     template:
-    `<div class="signup-form">
+        `<div class="signup-form">
         <form v-on:submit="submitSignupForm">
             <input class="form-input" type="text" v-model="fullName" placeholder="Full Name">
             <input class="form-input" type="email" v-model="emailid" placeholder="Email ID">
@@ -113,8 +113,8 @@ Vue.component('signup', {
             <input class="form-input-button" v-bind:disabled="signUpButtonDisabled" type="submit" value="Sign Up">
         </form>
     </div>`,
-    data: function(){
-        return{
+    data: function () {
+        return {
             fullName: "",
             emailid: "",
             password: "",
@@ -122,15 +122,15 @@ Vue.component('signup', {
             signUpButtonDisabled: true
         }
     },
-    methods:{
-        checkConfirmPassword: function(){
-            if(this.cfPassword == this.password && this.password.length>=8){
+    methods: {
+        checkConfirmPassword: function () {
+            if (this.cfPassword == this.password && this.password.length >= 8) {
                 this.signUpButtonDisabled = false
-            }else{
+            } else {
                 this.signUpButtonDisabled = true
             }
         },
-        submitSignupForm: function(e){
+        submitSignupForm: function (e) {
             e.preventDefault();
             axios({
                 method: 'post',
@@ -141,28 +141,28 @@ Vue.component('signup', {
                     password: this.password
                 }),
                 headers: {
-                  'content-type': 'application/x-www-form-urlencoded'
+                    'content-type': 'application/x-www-form-urlencoded'
                 }
             })
-            .then(function(response){
-                if(response.status == 200){
-                    localStorage.setItem('token', response.data.token);
-                    location.reload();
-                }
-            })
-            .catch(error => {
-                alert("Account already exists!!");
-                this.fullName = null;
-                this.emailid = null;
-                this.password = null;
-            });
+                .then(function (response) {
+                    if (response.status == 200) {
+                        localStorage.setItem('token', response.data.token);
+                        location.reload();
+                    }
+                })
+                .catch(error => {
+                    alert("Account already exists!!");
+                    this.fullName = null;
+                    this.emailid = null;
+                    this.password = null;
+                });
         }
     }
 })
 
 Vue.component('loginsignupform', {
     template:
-    `<div class="login-signup-form">
+        `<div class="login-signup-form">
         <div class="button-select">
             <button v-on:click="toggleSelected(0)" v-bind:class="{selected: isLoginActive}">Login</button>
             <button v-on:click="toggleSelected(1)" v-bind:class="{selected: isSignUpActive}">Sign Up</button>
@@ -170,20 +170,20 @@ Vue.component('loginsignupform', {
         <login v-if="isLoginActive"></login>
         <signup v-if="isSignUpActive"></signup>
     </div>`,
-    data: function(){
-        return{
+    data: function () {
+        return {
             isLoginActive: true,
             isSignUpActive: false
         }
     },
-    methods:{
-        toggleSelected: function(val){
-            if(val == 1){
+    methods: {
+        toggleSelected: function (val) {
+            if (val == 1) {
                 this.isLoginActive = false
                 this.isSignUpActive = true
             }
-            else{
-                this.isLoginActive =  true
+            else {
+                this.isLoginActive = true
                 this.isSignUpActive = false
             }
         }
@@ -191,9 +191,9 @@ Vue.component('loginsignupform', {
 })
 
 Vue.component('profilebox', {
-    props:['username', 'profile_icon'],
+    props: ['username', 'profile_icon'],
     template:
-    `<div class="profile-box">
+        `<div class="profile-box">
         <div class="profile-picture">
             <span v-html="profile_icon"></span>
         </div>
@@ -209,9 +209,9 @@ Vue.component('profilebox', {
 
 Vue.component('questionsbox', {
     template:
-    `<div class="question-form">
+        `<div class="question-form">
         <form v-on:submit>
-            <input class="form-input" type="text" v-model="question" placeholder="Type your question..">
+            <input class="form-input input-variable-width" type="text" v-model="question" placeholder="Type your question..">
             <input type="radio" id="general" v-model="type" value="general">
             <label for="general">General</label>
             <input type="radio" id="language" v-model="type" value="language">
@@ -223,25 +223,27 @@ Vue.component('questionsbox', {
             <input class="form-input-button" v-bind:disabled="askButtonDisabled" type="submit" value="Ask">
         </form>
     </div>`,
-    data: function(){
-        return{
+    data: function () {
+        return {
             languages: ['C', 'C++', 'Java', 'Python', 'C#', 'JavaScript'],
+            chips: ['Programming', 'Playing video games', 'Watching movies', 'Sleeping'],
+            items: ['Streaming', 'Eating'],
             question: "",
             type: null,
             lang: "",
             askButtonDisabled: true
         }
     },
-    watch:{
-        type: function(val){
-            if(val == "general"){
+    watch: {
+        type: function (val) {
+            if (val == "general") {
                 this.lang = "";
             }
         },
-        question: function(val){
-            if(val != ""){
+        question: function (val) {
+            if (val != "") {
                 this.askButtonDisabled = false
-            }else{
+            } else {
                 this.askButtonDisabled = true
             }
         }
@@ -250,40 +252,45 @@ Vue.component('questionsbox', {
 
 Vue.component('extrasbox', {
     template:
-    `<div class="extras-box">
+        `<div class="extras-box">
         <div class="button-select">
             <button v-on:click="toggleSelected(0)" v-bind:class="{selected: isQuestionsActive}">Ask</button>
             <button v-on:click="toggleSelected(1)" v-bind:class="{selected: isNotificationsActive}">Notifications</button>
             <button v-on:click="toggleSelected(2)" v-bind:class="{selected: isChatsActive}">Chats</button>
         </div>
-        <questionsbox v-if="isQuestionsActive"></questionsbox>
+        <div v-if="isQuestionsActive">
+            <button class="form-input-button ask-button" v-on:click="askClick">Ask your question</button>
+        </div>
         <notificationsbox v-if="isNotificationsActive"></notificationsbox>
         <chatsbox v-if="isChatsActive"></chatsbox>
     </div>`,
-    data: function(){
-        return{
+    data: function () {
+        return {
             isQuestionsActive: true,
             isNotificationsActive: false,
             isChatsActive: false
         }
     },
-    methods:{
-        toggleSelected: function(val){
-            if(val == 0){
+    methods: {
+        toggleSelected: function (val) {
+            if (val == 0) {
                 this.isQuestionsActive = true
                 this.isNotificationsActive = false
                 this.isChatsActive = false
             }
-            else if(val == 1){
+            else if (val == 1) {
                 this.isQuestionsActive = false
                 this.isNotificationsActive = true
                 this.isChatsActive = false
             }
-            else if(val == 2){
+            else if (val == 2) {
                 this.isQuestionsActive = false
                 this.isNotificationsActive = false
                 this.isChatsActive = true
             }
+        },
+        askClick: function () {
+            app.questionsBoxActive = true
         }
     }
 })
@@ -294,29 +301,35 @@ var app = new Vue({
         name: 'bights',
         isLoggedIn: false,
         profile_icon: null,
-        username: null
+        username: null,
+        questionsBoxActive: false
     },
-    mounted(){
-        if(localStorage.getItem('token')){
+    mounted() {
+        if (localStorage.getItem('token')) {
             const token = localStorage.getItem('token');
             this.isLoggedIn = true;
             axios({
                 method: 'get',
                 url: baseUrl + '/user/profile',
                 headers: {
-                  'Authorization': `Bearer ${token}` 
+                    'Authorization': `Bearer ${token}`
                 }
             })
-            .then(response => {
-                this.username = response.data.name;
-                this.profile_icon = jdenticon.toSvg(response.data.emailid, 100);
-            })
-            .catch(error => {
-                this.isLoggedIn = false;
-            })
+                .then(response => {
+                    this.username = response.data.name;
+                    this.profile_icon = jdenticon.toSvg(response.data.emailid, 100);
+                })
+                .catch(error => {
+                    this.isLoggedIn = false;
+                })
         }
-        else{
+        else {
             this.isLoggedIn = false;
         }
     },
+    methods: {
+        toggleQuestion: function () {
+            this.questionsBoxActive = false;
+        }
+    }
 })

@@ -39,7 +39,7 @@ body {
 .login-signup-form {
     display: none;
     margin: 100px auto;
-    height: 380px;
+    padding-bottom: 10px;
     width: 350px;
     background-color: whitesmoke;
     border-radius: 20px;
@@ -132,6 +132,33 @@ input:focus {
     margin: 30px auto 0px;
     border-radius: 20px;
     background-color: white;
+}
+
+.ask-button {
+    margin: 80px auto;
+    width: 135px;
+    outline: none;
+}
+
+.close-button {
+    text-align: right;
+}
+
+.close-button button {
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+.question-box {
+    background-color: whitesmoke;
+    margin: 5%;
+    padding: 2%;
+    border-radius: 10px;
+}
+
+.input-variable-width {
+    width: 90%;
 }
 
 @media only screen and (max-width: 600px) {
